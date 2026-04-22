@@ -7,5 +7,5 @@ hero:
   actions:
     - theme: brand
       text: Notes
-      link: /notes/tech-notes-setup
+      link: /tech-notes-setup
 ---
