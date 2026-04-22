@@ -10,14 +10,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
     ],
 
-    sidebar: [
-      {
-        text: 'Notes',
-        items: [
-          { text: 'tech notesを作った', link: '/tech-notes-setup' },
-        ],
-      },
-    ],
+    sidebar: false,
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/oshiro-kazuma/tech-notes' },
