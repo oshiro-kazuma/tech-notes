@@ -67,19 +67,21 @@ op run --env-file=.env.tpl -- npm start
 - 実行のたびに 1Password の認証が必要（Touch ID など）
 - CI/CD にはそのまま使えない
 
-> `op inject` の `{{ }}` 記法とは異なり、`op run --env-file` は `KEY=op://...` 形式のみ対応。
+> `op inject` の <span v-pre>`{{ }}`</span> 記法とは異なり、`op run --env-file` は `KEY=op://...` 形式のみ対応。
 
 ---
 
 ## パターン 2：`op inject` で `.env` を生成する
 
-`op inject` は `{{ op://... }}` テンプレートを実際の値に展開してファイルを出力する。
+`op inject` は <span v-pre>`{{ op://... }}`</span> テンプレートを実際の値に展開してファイルを出力する。
 
+::: v-pre
 ```bash
 # .env.tpl（op inject 用）
 DATABASE_URL={{ op://Personal/My App/database_url }}
 API_KEY={{ op://Personal/My App/api_key }}
 ```
+:::
 
 ```bash
 # .env として書き出す（Touch ID 1回）
