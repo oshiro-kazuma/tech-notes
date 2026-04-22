@@ -1,5 +1,6 @@
 ---
 title: tech notesを作った
+date: 2026-04-22
 ---
 
 # tech notesを作った

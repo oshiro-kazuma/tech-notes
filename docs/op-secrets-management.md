@@ -1,5 +1,6 @@
 ---
 title: 1Password CLI で環境変数・シークレットを管理する
+date: 2026-04-22
 ---
 
 # 1Password CLI で環境変数・シークレットを管理する
