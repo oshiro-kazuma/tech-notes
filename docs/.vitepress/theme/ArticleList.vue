@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { withBase } from 'vitepress'
 import { data as posts } from '../../posts.data.ts'
+import { formatDate } from './formatDate'
 </script>
 
 <template>
   <ul>
     <li v-for="post in posts" :key="post.url">
-      <span class="date">{{ post.frontmatter.date ?? '' }}</span>
+      <span class="date">{{ formatDate(post.frontmatter.date) }}</span>
       <a :href="withBase(post.url)">{{ post.frontmatter.title }}</a>
     </li>
   </ul>
