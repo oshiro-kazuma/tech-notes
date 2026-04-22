@@ -1,9 +1,9 @@
 ---
-layout: home
-
-hero:
-  name: tech notes
-  tagline: oshiro-kazuma's tech notes
+title: tech notes
 ---
+
+# tech notes
+
+oshiro-kazuma's tech notes
 
 <ArticleList />
