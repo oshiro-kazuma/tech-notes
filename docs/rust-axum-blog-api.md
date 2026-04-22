@@ -7,6 +7,9 @@ date: 2026-04-22
 
 シングルユーザー向けのブログAPIをRust + Axumで作った。
 
+- らーめんブログ: https://rust-blog-frontend.vercel.app
+- API docs (Swagger UI): https://rust-blog-api.fly.dev/api-docs
+
 ## スタック
 
 - **Axum 0.7** — Webフレームワーク

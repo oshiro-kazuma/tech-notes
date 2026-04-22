@@ -63,17 +63,3 @@ async fn get_me(claims: Claims, State(pool): State<SqlitePool>) -> Result<Json<U
     // claims.sub がログイン中のuser_id
 }
 ```
-
-## シングルユーザーの場合
-
-registerエンドポイントはユーザーが0件のときだけ通す。
-
-```rust
-async fn register(State(pool): State<SqlitePool>, Json(body): Json<RegisterRequest>) -> Result<Json<AuthResponse>, AppError> {
-    let count: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM users").fetch_one(&pool).await?;
-    if count > 0 {
-        return Err(AppError::Forbidden);
-    }
-    // ...
-}
-```
