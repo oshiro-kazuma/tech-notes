@@ -12,7 +12,6 @@ date: 2026-04-22
 - チームで開発する場合、Slack や Notion でパスワードを共有しがち
 - 1Password は既に使っているので、開発用のシークレット管理も一元化したい
 
----
 
 ## セットアップ
 
@@ -28,7 +27,6 @@ op --version
 eval $(op signin)
 ```
 
----
 
 ## 基本：`op://` 参照形式
 
@@ -44,7 +42,6 @@ op://Personal/My API Keys/api_key
 op://Work/AWS/access_key_id
 ```
 
----
 
 ## パターン 1：`op run --env-file` でコマンド実行時に注入
 
@@ -69,7 +66,6 @@ op run --env-file=.env.tpl -- npm start
 
 > `op inject` の <span v-pre>`{{ }}`</span> 記法とは異なり、`op run --env-file` は `KEY=op://...` 形式のみ対応。
 
----
 
 ## パターン 2：`op inject` で `.env` を生成する
 
@@ -102,7 +98,6 @@ go run ./cmd/server
 - 一度生成すればバッチ処理・cron にも使える
 - 認証情報が変わったときは再実行が必要
 
----
 
 ## パターン 3：`op document` でファイルごと管理する
 
@@ -119,7 +114,6 @@ op document get "My Service Account" --vault Personal --output ./credentials.jso
 chmod 600 ./credentials.json
 ```
 
----
 
 ## 実践：setup-secrets.sh パターン
 
@@ -154,7 +148,6 @@ fi
 [ "$ERRORS" -eq 0 ] || exit 1
 ```
 
----
 
 ## Makefile との統合
 
@@ -183,7 +176,6 @@ run:
 make run             # 認証不要
 ```
 
----
 
 ## まとめ
 
