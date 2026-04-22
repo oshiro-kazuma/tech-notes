@@ -14,7 +14,7 @@ export default defineConfig({
       {
         text: 'Notes',
         items: [
-          { text: 'tech notesを作った', link: '/notes/tech-notes-setup' },
+          { text: 'tech notesを作った', link: '/tech-notes-setup' },
         ],
       },
     ],
