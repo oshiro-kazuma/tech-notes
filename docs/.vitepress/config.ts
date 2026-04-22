@@ -19,7 +19,11 @@ function getSidebarItems() {
 
   const grouped: Record<string, { text: string; link: string }[]> = {}
   for (const post of posts) {
-    ;(grouped[post.year] ??= []).push({ text: post.text, link: post.link })
+    const mmdd = post.date
+      ? new Date(post.date).toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo', month: '2-digit', day: '2-digit' }).replace('/', '/')
+      : ''
+    const label = mmdd ? `${mmdd} ${post.text}` : post.text
+    ;(grouped[post.year] ??= []).push({ text: label, link: post.link })
   }
 
   return Object.keys(grouped)
