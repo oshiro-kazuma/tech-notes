@@ -1,6 +1,16 @@
 title: tech notes
 description: oshiro-kazuma's tech notes
-theme: minima
+remote_theme: just-the-docs/just-the-docs
+
+plugins:
+  - jekyll-remote-theme
 
 markdown: kramdown
 highlighter: rouge
+
+# just-the-docs settings
+color_scheme: dark
+search_enabled: true
+
+aux_links:
+  GitHub: https://github.com/oshiro-kazuma/tech-notes
