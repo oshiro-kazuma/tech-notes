@@ -2,10 +2,14 @@
 import { useData } from 'vitepress'
 
 const { frontmatter } = useData()
+
+const formattedDate = frontmatter.value.date
+  ? new Date(frontmatter.value.date).toISOString().slice(0, 10)
+  : null
 </script>
 
 <template>
-  <p v-if="frontmatter.date" class="article-date">{{ frontmatter.date }}</p>
+  <p v-if="formattedDate" class="article-date">{{ formattedDate }}</p>
 </template>
 
 <style scoped>

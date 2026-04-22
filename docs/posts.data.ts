@@ -5,9 +5,9 @@ export default createContentLoader('*.md', {
     return data
       .filter(page => page.url !== '/')
       .sort((a, b) => {
-        const dateA = a.frontmatter.date ?? ''
-        const dateB = b.frontmatter.date ?? ''
-        return dateB.localeCompare(dateA)
+        const dateA = new Date(a.frontmatter.date ?? 0).getTime()
+        const dateB = new Date(b.frontmatter.date ?? 0).getTime()
+        return dateB - dateA
       })
   }
 })
