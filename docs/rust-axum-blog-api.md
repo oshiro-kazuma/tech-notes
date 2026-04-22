@@ -9,6 +9,8 @@ date: 2026-04-22
 
 - らーめんブログ: https://rust-blog-frontend.vercel.app
 - API docs (Swagger UI): https://rust-blog-api.fly.dev/api-docs
+- API リポジトリ: https://github.com/oshiro-kazuma/sandbox/tree/main/rust-blog-api
+- フロントエンドリポジトリ: https://github.com/oshiro-kazuma/sandbox/tree/main/rust-blog-frontend
 
 ## スタック
 
