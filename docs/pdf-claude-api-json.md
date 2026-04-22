@@ -99,3 +99,48 @@ Anthropic APIでPDFを使う場合は`type: 'document'`、画像は`type: 'image
 ```
 
 JPEG・PNG・GIF・WebPに対応。
+
+## よりクリーンな方法：Tool use で強制する
+
+システムプロンプトでJSONを指定する方法はコードブロックが混入することがある。Tool useの `tool_choice` でツールを強制すると、`input` がそのままオブジェクトで返ってくるのでパース処理が不要になる。
+
+```typescript
+const response = await client.messages.create({
+  model: 'claude-opus-4-6',
+  max_tokens: 2048,
+  tools: [{
+    name: 'extract_entries',
+    description: '書類から会計エントリを抽出する',
+    input_schema: {
+      type: 'object',
+      properties: {
+        entries: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              entryDate: { type: 'string' },
+              description: { type: 'string' },
+              amount: { type: 'number' },
+              accountCategory: { type: 'string', enum: ['expense', 'income', 'liability', 'asset'] }
+            },
+            required: ['entryDate', 'description', 'amount', 'accountCategory']
+          }
+        }
+      },
+      required: ['entries']
+    }
+  }],
+  tool_choice: { type: 'tool', name: 'extract_entries' }, // このツールを必ず呼ばせる
+  messages: [{
+    role: 'user',
+    content: [contentBlock, { type: 'text', text: 'データを抽出してください。' }]
+  }],
+})
+
+// tool_use ブロックの input がそのままオブジェクト
+const toolUse = response.content.find(b => b.type === 'tool_use')
+const result = toolUse?.input // JSON.parse不要
+```
+
+スキーマをJSONスキーマで定義するので、型の保証も強くなる。
