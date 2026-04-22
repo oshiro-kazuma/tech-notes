@@ -1,4 +1,18 @@
 import { defineConfig } from 'vitepress'
+import { readdirSync, readFileSync } from 'fs'
+import { join, basename } from 'path'
+
+function getSidebarItems() {
+  const docsDir = join(process.cwd(), 'docs')
+  return readdirSync(docsDir)
+    .filter(f => f.endsWith('.md') && f !== 'index.md')
+    .map(f => {
+      const content = readFileSync(join(docsDir, f), 'utf-8')
+      const titleMatch = content.match(/^title:\s*(.+)$/m)
+      const title = titleMatch ? titleMatch[1].trim() : basename(f, '.md')
+      return { text: title, link: '/' + basename(f, '.md') }
+    })
+}
 
 export default defineConfig({
   title: 'tech notes',
@@ -10,7 +24,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
     ],
 
-    sidebar: false,
+    sidebar: getSidebarItems(),
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/oshiro-kazuma/tech-notes' },

@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import { data as posts } from '../../posts.data.ts'
 </script>
 
 <template>
   <div class="article-list">
-    <a v-for="post in posts" :key="post.url" :href="post.url" class="article-item">
+    <a v-for="post in posts" :key="post.url" :href="withBase(post.url)" class="article-item">
       {{ post.frontmatter.title }}
     </a>
   </div>
