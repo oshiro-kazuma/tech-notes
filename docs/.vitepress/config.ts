@@ -4,14 +4,27 @@ import { join, basename } from 'path'
 
 function getSidebarItems() {
   const docsDir = join(process.cwd(), 'docs')
-  return readdirSync(docsDir)
+  const posts = readdirSync(docsDir)
     .filter(f => f.endsWith('.md') && f !== 'index.md')
     .map(f => {
       const content = readFileSync(join(docsDir, f), 'utf-8')
       const titleMatch = content.match(/^title:\s*(.+)$/m)
+      const dateMatch = content.match(/^date:\s*(.+)$/m)
       const title = titleMatch ? titleMatch[1].trim() : basename(f, '.md')
-      return { text: title, link: '/' + basename(f, '.md') }
+      const date = dateMatch ? dateMatch[1].trim() : ''
+      const year = date ? new Date(date).getFullYear().toString() : 'undated'
+      return { text: title, link: '/' + basename(f, '.md'), year, date }
     })
+    .sort((a, b) => b.date.localeCompare(a.date))
+
+  const grouped: Record<string, { text: string; link: string }[]> = {}
+  for (const post of posts) {
+    ;(grouped[post.year] ??= []).push({ text: post.text, link: post.link })
+  }
+
+  return Object.keys(grouped)
+    .sort((a, b) => b.localeCompare(a))
+    .map(year => ({ text: year, items: grouped[year] }))
 }
 
 export default defineConfig({
