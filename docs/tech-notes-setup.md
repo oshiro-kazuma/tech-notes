@@ -1,3 +1,7 @@
+---
+title: tech notesを作った
+---
+
 # tech notesを作った
 
 GitHub Pagesでtechnotesを作った。
