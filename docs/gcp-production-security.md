@@ -5,7 +5,7 @@ date: 2026-04-28
 
 # production を GitHub から遠ざける（GCP編）
 
-AI エージェントに自動化を任せる場面が増え、production credential の漏洩リスクは「人が間違えるか」だけでなく「外部システムが侵害された時にどこまで波及するか」で考える必要が出てきた。secret も、DB への到達経路も、deploy 権限も、なるべく GitHub 側に持たせず GCP 内に閉じ込める。最近運用していて筋が良いかもしれない、と感じている方針をまとめる。
+AI エージェントに自動化を任せる場面が増え、production credential の漏洩リスクは「人が間違えるか」だけでなく「外部システムが侵害された時にどこまで波及するか」で考える必要が出てきた。Cloud Run + Cloud Build + Secret Manager + private VPC な Cloud SQL という構成で運用していて、立ち上げ時に楽したくて選んだ組み合わせだったが、結果として「production の secret も DB への到達経路も deploy 権限も GitHub 側に持たせない」形になっていた。現状の構成と、それぞれの選択がどう効いている(または効いていない)かを記録しておく。
 
 ## 方針
 
@@ -42,7 +42,7 @@ Cloud Run から接続する場合は Direct VPC egress を経由する。
 
 ## DB が「遠い」設計を受け入れる
 
-private VPC にすると、利便性とのトレードオフが発生する。これは「不便」ではなく「意図した設計」として受け入れるのが大事。
+private VPC にすると、利便性とのトレードオフが発生する。これは制限ではなく、private VPC を選んだ時点で付いてくる性質。最初は不便に感じたが、運用してみるとこれで十分成立している。むしろ **DB がかなり遠い場所に置かれた状態** になっていて、認証情報が漏れた程度では到達できないので、セキュリティ的にはかなり強固。
 
 ### 起こること
 
@@ -195,4 +195,4 @@ Cloud Build の service account に `roles/run.admin` と `roles/secretmanager.s
 - Cloud SQL は private VPC、secret は Secret Manager、deploy は Cloud Build
 - 結果として「GitHub が侵害されても production は守られる」状態になる
 
-便利さと引き換えにする価値があるリスクとそうでないリスクを切り分けるのが重要で、production credential については GCP 内完結が筋が良い。
+楽したくて始めた構成が、AI 時代の脅威モデルから見ても破綻していなかった、というのが現時点の感触。Cloud Run + Cloud Build + Secret Manager + private VPC の素直な組み合わせは、結果として GitHub からの侵害に対して頑健になっていた。
