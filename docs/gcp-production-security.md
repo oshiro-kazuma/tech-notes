@@ -1,9 +1,9 @@
 ---
-title: production を GitHub から遠ざける（GCP編）
+title: GitHubからProduction環境を遠ざける(GCP編)
 date: 2026-04-28
 ---
 
-# production を GitHub から遠ざける（GCP編）
+# GitHubからProduction環境を遠ざける(GCP編)
 
 AI エージェントに自動化を任せる場面が増え、production credential の漏洩リスクは「人が間違えるか」だけでなく「外部システムが侵害された時にどこまで波及するか」で考える必要が出てきた。Cloud Run + Cloud Build + Secret Manager + private VPC な Cloud SQL という構成で運用していて、立ち上げ時に楽したくて選んだ組み合わせだったが、結果として「production の secret も DB への到達経路も deploy 権限も GitHub 側に持たせない」形になっていた。現状の構成と、それぞれの選択がどう効いている(または効いていない)かを記録しておく。
 
